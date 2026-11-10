@@ -1,0 +1,77 @@
+AUTOMATIZADOR GALA 2026 - QR PARA IPHONE Y ANDROID
+=================================================
+
+CONTENIDO
+- generar_invitaciones.py: generador de invitaciones.
+- GENERAR_INVITACIONES.bat: instala dependencias y ejecuta el generador.
+- plantilla_invitacion.png: plantilla original de la invitacion.
+- Lista_Invitados.xlsx: lista de estudiantes con una columna Curso vacia para completar.
+- CONFIGURACION.json: direccion del sitio, opcion de curso y curso general.
+- PUBLICAR_EN_GITHUB/index.html: pagina web generica que se debe publicar.
+
+IMPORTANTE: EL PROCESO TIENE DOS FASES
+
+FASE 1: PUBLICAR GRATIS LA PAGINA WEB
+1. Descomprime el ZIP.
+2. Ejecuta GENERAR_INVITACIONES.bat.
+3. Como CONFIGURACION.json tiene base_url vacia, el programa mostrara las instrucciones.
+4. Entra en https://github.com e inicia sesion o crea una cuenta.
+5. Crea un repositorio NUEVO llamado gala-invitaciones y selecciona Public.
+   En GitHub Free, GitHub Pages requiere un repositorio publico.
+6. En el repositorio, pulsa Add file > Upload files.
+7. Sube UNICAMENTE PUBLICAR_EN_GITHUB/index.html (el archivo se llama index.html).
+8. Pulsa Commit changes.
+9. Entra en Settings > Pages.
+10. En Build and deployment selecciona Deploy from a branch.
+11. Elige Branch: main y Folder: /(root). Pulsa Save.
+12. Espera a que GitHub publique el sitio. Copia la URL que aparece en Pages.
+   Normalmente sera: https://TUUSUARIO.github.io/gala-invitaciones/
+
+FASE 2: GENERAR LAS INVITACIONES CON ENLACES
+1. Abre CONFIGURACION.json con el Bloc de notas.
+2. En base_url, pega la URL real de GitHub Pages. Conserva las comillas.
+   Ejemplo: "base_url": "https://TUUSUARIO.github.io/gala-invitaciones/"
+3. Guarda CONFIGURACION.json.
+4. Abre Lista_Invitados.xlsx.
+5. Completa la columna Curso para cada estudiante (por ejemplo 4A o 4B).
+   Si todos tienen el mismo curso, puedes dejar la columna vacia y escribirlo
+   en curso_general dentro de CONFIGURACION.json.
+6. Guarda y cierra Excel.
+7. Ejecuta GENERAR_INVITACIONES.bat nuevamente.
+8. Los resultados quedaran en SALIDA_INVITACIONES.
+
+CONFIGURACION.json
+- base_url: URL HTTPS real del sitio GitHub Pages. Obligatoria para generar QR.
+- incluir_curso_en_qr: true para mostrar curso; false para omitirlo.
+- curso_general: curso comun opcional, por ejemplo 4A. La columna Curso del Excel
+  tiene prioridad sobre este valor.
+
+COMO FUNCIONA EL QR
+Cada QR contiene un enlace HTTPS al sitio publicado. El nombre y el curso viajan
+codificados dentro del fragmento del enlace (#...). El navegador procesa ese
+fragmento localmente para mostrar los datos; el fragmento no se incluye en la
+peticion HTTP normal al servidor. La pagina alojada es generica y no contiene la
+lista de estudiantes.
+
+PRIVACIDAD
+- GitHub Pages es un sitio publico en Internet; el repositorio debe ser publico
+  para usar GitHub Pages con GitHub Free.
+- NO subas Lista_Invitados.xlsx, PDFs, PNG de invitaciones ni archivos con datos
+  de estudiantes al repositorio. Sube solamente PUBLICAR_EN_GITHUB/index.html.
+- El fragmento del enlace no es cifrado. Cualquier persona que tenga la invitacion
+  o el QR puede abrirlo y ver el nombre y curso. No sirve como autenticacion ni
+  como control de acceso.
+
+USO EN TELEFONOS
+- iPhone: abrir Camara, apuntar al QR y tocar el enlace que aparece.
+- Android: abrir Camara o el escaner QR integrado y tocar el enlace detectado.
+- Se requiere conexion a Internet al abrir la pagina.
+- No se necesita instalar una aplicacion lectora externa.
+
+SALIDA
+- Invitaciones_Todas.pdf
+- Invitaciones_Individuales.zip
+- PNG individual por estudiante.
+
+Si GitHub Pages no muestra el sitio, revisa Settings > Pages y el estado del
+proceso de publicacion. El primer despliegue puede tardar unos minutos.
